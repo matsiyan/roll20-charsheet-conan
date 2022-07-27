@@ -1,9 +1,14 @@
-<!-- Credit for the original by Keith Johnson https://www.starshipsandsteel.com/2020/12/conan-2d20-on-roll20-custom-sheets.html  May 9, 2021-->
-<!-- Adapted by Murray Writtle https://www.facebook.com/campobianco/ Starting Dec 2021 -->
-
+/*
+Credit for the original by Keith Johnson https://www.starshipsandsteel.com/2020/12/conan-2d20-on-roll20-custom-sheets.html  May 9, 2021
+Adapted by Murray Writtle https://www.facebook.com/campobianco/ Starting Dec 2021
+Rebaselined July 25, 2022
+*/
 /* Configure Tab Buttons */
+/* <!-- January 12, 2022 --> */
 .sheet-PC,
 .sheet-PCdetail,
+.sheet-Notes,
+.sheet-Ref,
 .sheet-NPC,
 .sheet-GM, {
     display: none;
@@ -131,30 +136,36 @@
 .sheet-med2text{
     width:28em;
 }
-.sheet-width5{
-    width:5em;
-}
-.sheet-width6{
-    width:6em;
-}
-.sheet-width10 {
-    width: 10em;
-}
-.sheet-width15{
-    width:15em;
-}
 .sheet-width20 {
     width:20em;
 }
 .sheet-width25 {
     width:25em;
 }
+.sheet-equipment-name {
+    width:27em;
+}
 .sheet-width30 {
     width:30em;
 }
-
+.sheet-width15{
+    width:15em;
+}
+.sheet-width5{
+    width:5em;
+}
+.sheet-width3{
+    width:3em;
+}
+.sheet-width6{
+    width:6em;
+}
 .sheet-medtext2 {
     width:19em;
+}
+
+.sheet-width10 {
+    width: 10em;
 }
 
 .sheet-tinytext {
@@ -228,6 +239,17 @@
     text-align: left;
     size: 4em;
     width:10em;
+    text-shadow: 1px 1px rgb(255, 255, 255)
+}
+.sheet-detaillabel{
+    font-size: small;
+    font-weight: bold;
+    color: black;
+    border: none;
+    background: transparent;
+    text-align: left;
+    size: 4em;
+    width:7em;
     text-shadow: 1px 1px rgb(255, 255, 255)
 }
 .sheet-talentlabel-5{
@@ -345,7 +367,7 @@
 
 .sheet-talentarea {
     font-size: small;
-    width: 36em;
+    width: 59em;
     height: 5em;
     resize: none;
 }
@@ -391,7 +413,7 @@
 
 .sheet-skillspanel {
     grid-area: skills-panel;
-    background-image: url("https://i.imgur.com/solKVML.png"); /*Three Clumn*/
+    background-image: url("https://i.imgur.com/solKVML.png"); /*Three Column*/
     background-repeat: repeat;
     background-size: cover;
     padding: 1em;
@@ -399,7 +421,7 @@
 
 .sheet-newskillspanel{
     grid-area: newskills-panel;
-    background-image: url("https://i.imgur.com/FCx2vvW.png"); /*two Column*/
+    background-image: url("https://i.imgur.com/FCx2vvW.png"); /*Two Column*/
     background-repeat: repeat;
     background-size: cover;
     padding: 1em;
@@ -643,7 +665,7 @@
 	height: auto;
     border: 2px solid black;
     grid-template-columns: [gutter] 5px [Body-Left] 385px [break] 5px [body-right] 385px [gutter] 5px;
-    grid-template-rows: [gutter] 5px [Name] 8em [Attribs] auto [armor] auto [stress] auto [weapons] auto [notes] auto [gutter] 5px;
+    grid-template-rows: [gutter] 5px [Name] auto [Attribs] auto [armor] auto [stress] auto [weapons] auto [notes] auto [gutter] 5px;
     grid-template-areas:
         ". . . . ."
         ". NPC-Name . NPC-momentum ."
@@ -712,6 +734,32 @@
 }
 
 
+.sheet-actionspanel{
+    grid-area: actions-panel;
+    background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Vaesen/Images/vasen_background.jpg"); /*Desaturated Paper Teture*/
+    background-repeat: repeat;
+    background-size: cover;
+    padding: 1em;
+}
+
+.sheet-tabstoggle[value="Ref"] ~ div.sheet-Ref {
+    display: grid;
+    width: 835px;
+    height: auto;
+    border: 2px solid black;
+    grid-template-columns: [gutter] 1em [panelcol] auto [gutter] 1em;
+    grid-template-rows: [gutter] 1em [panelrow] auto [panelrow2] auto [gutter] 1em;
+    grid-template-areas:
+        ". . . "
+        ". momentum-panel ."
+        ". actions-panel . "
+        ". . . ";
+    grid-gap: 10px;
+    background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Vaesen/Images/vasen_background.jpg"); /*Desaturated Paper Teture*/
+    background-repeat: repeat;
+    background-size: cover;
+}
+
 /*Skill Roll Template*/
 .sheet-rolltemplate-conanroll div.sheet-conan-container{
     border: 0px solid #000;
@@ -764,12 +812,22 @@
     color: white;
     background-color: green;
 }
+
+
 /*CD roll Template*/
 .sheet-rolltemplate-CDroll div.sheet-CD-container{
     border: 0px solid #000;
     background-image: url("https://i.imgur.com/RIfekk9.png");
     background-size: cover;
+    text-align:center;
 }
+.sheet-rolltemplate-CDroll div.sheet-reroll{
+    border: 0px solid #000;
+    background-image: url("https://i.imgur.com/RIfekk9.png");
+    background-size: cover;
+}
+
+
 .sheet-rolltemplate-CDroll .sheet-CD-roll-header{
     background-color: transparent;
     font-weight: bold;
@@ -1002,7 +1060,7 @@
     font-weight:bold;
 }
 
-/*Repeating Sections*/
+/*Repeating Setions*/
 .repcontrol {
     display: flex;
     margin-top: 3px;

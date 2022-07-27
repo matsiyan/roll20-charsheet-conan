@@ -1,10 +1,12 @@
-<!-- Credit for the original by Keith Johnson https://www.starshipsandsteel.com/2020/12/conan-2d20-on-roll20-custom-sheets.html  May 9, 2021-->
+<!-- Credit for the original by Keith Johnson https://www.starshipsandsteel.com/2020/12/conan-2d20-on-roll20-custom-sheets.html  May 9, 2021 -->
 <!-- Adapted by Murray Writtle https://www.facebook.com/campobianco/ Starting Dec 2021 -->
-
 <!-- Sheet Tab Buttons -->
+<!-- January 12, 2022 -->
 <div>
     <button type="action" name="act_PC">PC</button>
     <button type="action" name="act_PCdetail">PC-Detail</button>
+    <button type="action" name="act_NPC">Notes</button>
+    <button type="action" name="act_Ref">Reference</button>
     <button type="action" name="act_NPC">NPC</button>
     <button type="action" name="act_GM">GM Panel</button>
 </div>
@@ -17,20 +19,22 @@
 <div class="sheet-PC">
     <div class="charactername">
         <input class="charname_label" name="attr_character_name">
+        <button type="roll" title="Select Token and click to add to Initiative Tracker" value="/gr 0 &{tracker:+}">Init</button>
+
     </div>
 
 	<div class="weaponpanel">
         <span class="conanheader">Weapons</span> 
-		<table border = 1>
+		<table>
 			<tr>
 				<TR>
-					<td><span class="skilllabel">Name__________</span></td>
-					<td><span class="skilllabel">Class____</span></td>
-					<td><span class="skilllabel">Hand_</span></td>
-					<td><span class="skilllabel">Rch/Rng_</span></td>
-					<td><span class="skilllabel">Dmg______</span></td>
-					<td><span class="skilllabel">Effects______________</span></td>
-					<td><span class="skilllabel">Loads</span></td>
+					<td width="124"><span class="skilllabel">Name</span></td> 
+					<td width="80"><span class="skilllabel">Class</span></td>
+					<td width="40"><span class="skilllabel">Hand</span></td>
+					<td width="42"><span class="skilllabel">Rch/Rng</span></td>
+					<td width="72"><span class="skilllabel">Damage</span></td>
+					<td width="280"><span class="skilllabel">Effects</span></td>
+					<td width="45"><span class="skilllabel">Loads</span></td>
 				</TR>
 			</tr>
 		</table>
@@ -39,8 +43,8 @@
             <input type="text" class="weaponheader" value="Weapon Name" name="attr_WeaName">
 			<select name="attr_wea-class" class="width6" readonly>
 				<option value="@{melee_bonus}" title="Melee">Melee</option>
-				<option value="@{ranged_bonus}">Ranged</option>
-				<option value="@{threat_bonus}">Threaten</option>
+				<option value="@{ranged_bonus}">Range</option>
+				<option value="@{threat_bonus}">Threat</option>
             </select>
             <select name="attr_wea-handed" class="attribtext">
                 <option value="1">1H</option>
@@ -48,10 +52,10 @@
                 <option value="U">Unbalanced</option>
                 <option value="N">N/A</option>              
             </select>
-            <input type="text" class="width5" value="reach" name="attr_reach" title="Reach" value="1">
+            <input type="text" class="width3" value="reach" name="attr_reach" title="Reach" value="1">
             <input type="number" class="die-value" value="1" name="attr_CD" title="Damage dice">
             <button type="roll" class="blankroll" title="Damage roll" value="!rollcd=@{character_id}=@{WeaName}=@{cd}=@{wea-class}=?{extra dice|0}=@{loadbonus}=@{effects}"><img src="https://i.imgur.com/V0qkLWo.png" width="20"></button>
-            <input type="text" value="effects" name="attr_effects" class="width15">
+            <input type="text" value="effects" name="attr_effects" class="width20">
             <!--<input type="checkbox" name="attr_load1" value="1"><input type="checkbox" name="attr_load2" value="1"><input type="checkbox" name="attr_load3" value="1"><input type="checkbox" name="attr_load4"value="1">-->
             <input type="number" title="total loads" name="attr_totalloads" value="1">
             <button type="action" name="act_load"><img src="https://i.imgur.com/T5wqenY.png" width="15" title="Use a Load to add d20 and 1cd to current roll."></button>
@@ -74,6 +78,66 @@
                 <tr>
                     <TR>
                         <td><span class="skilllabel">Skill Name (attribute)</span></td><td><span class="skilllabel">Exp</span></td><td><span class="skilllabel">TN</span></td><td><span class="skilllabel">FC</span></td><td><span class="skilllabel">Die Pool</span></td><td><span class="skilllabel">Roll Dice!</span></td>
+                    </TR>
+                    <TR class="skillrow">
+                        <Td><span class="skilllabel" title="Making Melee attacks. Identifying melee weapons and their Qualities, and caring for them.">Melee (Agility)</span></Td>
+                        <td><input class="attributelabel" name="attr_melee_exp" type="number" value=0></Td>
+                        <td><input class="attributelabel" name="attr_melee_TN" type="number" value="@{Melee_exp}+@{agility}" disabled></Td>
+                        <td><input class="attributelabel" name="attr_melee_focus" type="number" value=0></Td>
+                        <td>
+                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
+                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
+                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
+                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
+                        </td>
+                        <td>
+                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Melee_TN} @{Melee_focus} Melee ?{Difficulty?|1}" title="Melee"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
+                        </td>  
+                    </TR>
+                    <TR class="skillrow">
+                        <Td><span class="skilllabel" title="Blocking Melee attacks. Identifying combat styles."> Parry (Coordination)</span></Td>
+                        <td><input class="attributelabel" name="attr_parry_exp" type="number" value=0></Td>
+                        <td><input class="attributelabel" name="attr_parry_TN" type="number" value="@{parry_exp}+@{coordination}" disabled></Td>
+                        <td><input class="attributelabel" name="attr_parry_focus" type="number" value=0></Td>
+                        <td>
+                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
+                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
+                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
+                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
+                        </td>
+                        <td>
+                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Parry_TN} @{Parry_focus} Parry ?{Difficulty?|1}" title="Parry"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
+                        </td> 
+                    </TR>
+                    <TR class="skillrow">
+                        <Td><span class="skilllabel" title="Making Ranged attacks. Identifying ranged weaponry. Maintaining ranged weaponry.">Ranged (Coordination)</span></Td>
+                        <td><input class="attributelabel" name="attr_ranged_Weapons_exp" type="number" value=0></Td>
+                        <td><input class="attributelabel" name="attr_ranged_Weapons_TN" type="number" value="@{Ranged_Weapons_exp}+@{coordination}" disabled></Td>
+                        <td><input class="attributelabel" name="attr_ranged_Weapons_focus" type="number" value=0></Td>
+                        <td>
+                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
+                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
+                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
+                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
+                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
+                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
+                        </td>
+                        <td>
+                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Ranged_Weapons_TN} @{Ranged_Weapons_focus} Ranged_Weapons ?{Difficulty?|1}" title="Ranged_Weapons"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
+                        </td> 
                     </TR>
                     <TR  class="skillrow">
                         <Td><span class="skilllabel" title="Moving quickly through difficult terrain. Jumping. Avoiding falling damage. Dodging Ranged attacks.">Acrobatics (Agility)</span></td>
@@ -316,26 +380,6 @@
                         </td>  
                     </TR>
                     <TR class="skillrow">
-                        <Td><span class="skilllabel" title="Making Melee attacks. Identifying melee weapons and their Qualities, and caring for them.">Melee (Agility)</span></Td>
-                        <td><input class="attributelabel" name="attr_melee_exp" type="number" value=0></Td>
-                        <td><input class="attributelabel" name="attr_melee_TN" type="number" value="@{Melee_exp}+@{agility}" disabled></Td>
-                        <td><input class="attributelabel" name="attr_melee_focus" type="number" value=0></Td>
-                        <td>
-                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
-                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
-                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
-                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
-                        </td>
-                        <td>
-                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Melee_TN} @{Melee_focus} Melee ?{Difficulty?|1}" title="Melee"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
-                        </td>  
-                    </TR>
-                    <TR class="skillrow">
                         <Td><span class="skilllabel" title="Finding hidden things. Noticing things that are unusual or simply out of the ordinary.">Observation (Awarness)</span></Td>
                         <td><input class="attributelabel" name="attr_observation_exp" type="number" value=0></Td>
                         <td><input class="attributelabel" name="attr_observation_TN" type="number" value="@{observation_exp}+@{awareness}" disabled></Td>
@@ -356,26 +400,6 @@
                         </td>  
                     </TR>
                     <TR class="skillrow">
-                        <Td><span class="skilllabel" title="Blocking Melee attacks. Identifying combat styles."> Parry (Coordination)</span></Td>
-                        <td><input class="attributelabel" name="attr_parry_exp" type="number" value=0></Td>
-                        <td><input class="attributelabel" name="attr_parry_TN" type="number" value="@{parry_exp}+@{coordination}" disabled></Td>
-                        <td><input class="attributelabel" name="attr_parry_focus" type="number" value=0></Td>
-                        <td>
-                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
-                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
-                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
-                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
-                        </td>
-                        <td>
-                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Parry_TN} @{Parry_focus} Parry ?{Difficulty?|1}" title="Parry"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
-                        </td> 
-                    </TR>
-                    <TR class="skillrow">
                         <Td><span class="skilllabel" title="Convincing others to do as you wish, by charm or by intimidation.">Persuade (Personality)</span></Td>
                         <td><input class="attributelabel" name="attr_persuade_exp" type="number" value=0></Td>
                         <td><input class="attributelabel" name="attr_persuade_TN" type="number" value="@{persuade_exp}+@{personality}" disabled></Td>
@@ -393,26 +417,6 @@
                         </td>
                         <td>
                             <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Persuade_TN} @{Persuade_focus} Persuade ?{Difficulty?|1}" title="Persuade"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
-                        </td> 
-                    </TR>
-                    <TR class="skillrow">
-                        <Td><span class="skilllabel" title="Making Ranged attacks. Identifying ranged weaponry. Maintaining ranged weaponry.">Ranged (Coordination)</span></Td>
-                        <td><input class="attributelabel" name="attr_ranged_Weapons_exp" type="number" value=0></Td>
-                        <td><input class="attributelabel" name="attr_ranged_Weapons_TN" type="number" value="@{Ranged_Weapons_exp}+@{coordination}" disabled></Td>
-                        <td><input class="attributelabel" name="attr_ranged_Weapons_focus" type="number" value=0></Td>
-                        <td>
-                            <button type="action" title="+1d20 from momentum." name="act_adddie_momentum"><img src="https://i.imgur.com/ixvmhBJ.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10" title="">
-                            <button type="action" title="Give GM 1 doom for +1d20." name="act_adddie_doom"><img src="https://i.imgur.com/5V9R08u.png" width="20"></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20 from Fortune, rolled as a 1." name="act_addlucky20"><img src="https://i.imgur.com/sZW28jM.png" width="20" ></button>
-                            <img src="https://i.imgur.com/DSePK2T.png" width="10"title="">
-                            <button type="action" title="+1d20, no cost, make up deficiencies from loads etc." name="act_add20"><img src="https://i.imgur.com/olwFONA.png" width="20"></button>
-                            <button type="action" name="act_cleardice" title="Reset dice and load selections.">Reset Dice</button>
-                            <span class="dielabel">2d20 +</span><input type="number" class="attributelabel" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
-                        </td>
-                        <td>
-                            <button type="roll" class="blankroll" name="skill_check" value="!skillrow @{character_id} 2 @{Ranged_Weapons_TN} @{Ranged_Weapons_focus} Ranged_Weapons ?{Difficulty?|1}" title="Ranged_Weapons"><img src="https://i.imgur.com/YuDxEpz.png" width="30"></button> </td>
                         </td> 
                     </TR>
                     <TR class="skillrow">
@@ -1019,15 +1023,16 @@
 	    <span class="conanheader">Talents</span><Br>
 		<fieldset class="repeating_talents">
 			<input type="text" class="talentlabel" name="attr_talentname" value="new talent name">
+            <button class="blankroll" type="roll" name="act_ctivate_talent" value="&{template:conantalent}{{name=@{character_name}}}{{talent=@{talentname}}}{{rank=@{talentrank}}}{{cost=@{talentcost}}}{{desc=@{talentdesc}}}{{button=[Spend Momentum](!spendmomentum @{character_id} @{talentcost} @{talentname})}}">Use</button>
             Rank<input type="number" class="die-value" name="attr_talentrank" value="0" title="Rank (if any)">
             Max Rank<input type="number" class="die-value" name="attr_talenmaxtrank" value="0" title="Maximum Rank if applicable">
             <img src="https://i.imgur.com/U21VHwt.png" width="10"> 
-            Cost<input type="number" class="die-value" name="attr_talentcost" value="0" title="Momentum cost (if any)"><br>
-            <textarea name="attr_talentdesc" class="talentarea"></textarea><br>
-            Xp Cost<input type="number" class="die-value" name="attr_talentXPcost" value="0" title="Cost to purchase talent">
-            <button class="blankroll" type="roll" name="act_ctivate_talent" value="&{template:conantalent}{{name=@{character_name}}}{{talent=@{talentname}}}{{rank=@{talentrank}}}{{cost=@{talentcost}}}{{desc=@{talentdesc}}}{{button=[Spend Momentum](!spendmomentum @{character_id} @{talentcost} @{talentname})}}">Use</button>
-  		</fieldset>
+            Cost<input type="number" class="die-value" name="attr_talentcost" value="0" title="Momentum cost (if any)">
+			Xp Cost<input type="number" class="die-value" name="attr_talentXPcost" value="0" title="Cost to purchase talent">
+			<br><textarea name="attr_talentdesc" class="talentarea"></textarea>
+              		</fieldset>
     </div>
+
 
     <!-- ********************************** -->
     <!-- QUICK MOMENTUM PANEL -->
@@ -1090,8 +1095,7 @@
             <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
             <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
         </button>
-    </div>-->
-</div>
+    </div>--></div>
 
     <!-- ********************************** -->
     <!-- PC-Detail Page -->
@@ -1100,15 +1104,14 @@
 <div class="sheet-PCdetail">
     <div class="detailpanel">
         <span class="conanheader">Character Details</span><Br>
-        <input type="text" class="talentlabel" name="attr_castelabel" value="Caste" readonly> <input type="text" name="attr_caste" value="None" class="width15"> <BR>
-        <input type="text" class="talentlabel" name="attr_archetypelabel" value="Archetype" readonly> <input type="text" name="attr_archetype" value="None" class="width15"><BR>
-        <input type="text" class="talentlabel" name="attr_educationlabel" value="Education" readonly> <input type="text" name="attr_education" value="None" class="width15">  <BR>
-        <input type="text" class="talentlabel" name="attr_Homelandlabel" value="Homeland" readonly> <input type="text" name="attr_homeland" value="None" class="width15"><BR>
-        <input type="text" class="talentlabel" name="attr_traitlabel" value="Trait  " readonly><input type="text" name="attr_trait" value="None" class="width15"><BR>
-        <input type="text" class="talentlabel" name="attr_naturelabel" value="Nature" readonly> <input type="text" name="attr_nature" value="None" class="width15"><BR>
-        <input type="text" class="talentlabel" name="attr_warstorylabel" value="War Story" readonly> <input type="text" name="attr_warstory" value="None" class="width15">
-        
-        <input type="text" class="talentlabel" name="attr_languageslabel" value="Languages" readonly><br> <input type="text" name="attr_languages" value="None" class="width30">
+        <input type="text" class="detaillabel" name="attr_Homelandlabel" value="Homeland" readonly> <input type="text" name="attr_homeland" value="None" class="width20"><BR>
+        <input type="text" class="detaillabel" name="attr_castelabel" value="Caste" readonly> <input type="text" name="attr_caste" value="None" class="width20"> <BR>
+        <input type="text" class="detaillabel" name="attr_traitlabel" value="Trait" readonly> <input type="text" name="attr_trait" value="None" class="width20"><BR>
+        <input type="text" class="detaillabel" name="attr_archetypelabel" value="Archetype" readonly> <input type="text" name="attr_archetype" value="None" class="width20"><BR>
+        <input type="text" class="detaillabel" name="attr_naturelabel" value="Nature" readonly> <input type="text" name="attr_nature" value="None" class="width20"><BR>
+        <input type="text" class="detaillabel" name="attr_educationlabel" value="Education" readonly> <input type="text" name="attr_education" value="None" class="width20">  <BR>
+		<input type="text" class="detaillabel" name="attr_warstorylabel" value="War Story" readonly> <input type="text" name="attr_warstory" value="None" class="width20">
+        <input type="text" class="detaillabel" name="attr_languageslabel" value="Languages" readonly><br> <input type="text" name="attr_languages" value="None" class="width30">
     </div>
     <div class="attributespanel">
         <table>
@@ -1128,11 +1131,10 @@
     <div class="equipmentpanel">
         <span class="conanheader">Equipment</span><Br>
         Max Weight: <input type="number" name="attr_maxweight" value="(@{brawn}*2)+@{adjustment}" disabled>
-        
-        Adjustment: <input type="number" name="attr_adjustment" value="0"><BR>
+        Adjustment: <input type="number" name="attr_adjustment" value="0">
         Carried weight: <input type="number" name="attr_carriedweight" value="0" readonly>
         <fieldset class="repeating_equipment">
-            <input type="text" class="width25" name="attr_equipmentname" value="Name" title="Eqipment name">
+            <input type="text" class="equipment-name" name="attr_equipmentname" value="Name" title="Equipment name">
             Eff: <input type="text" class="width10" name="attr_equipmenteffect" value="effect" title="Equipmentfffect">
             Enc: <input type="number" class="die-value" name="attr_equipmentweight" value="Weight" title="Equipment Weight">
             Qty: <input type="number" class="die-value" name="attr_equipmentqty" value="1" title="Equipment quantity">
@@ -1168,7 +1170,7 @@
 
                     <img src="https://i.imgur.com/IhU37jG.png" width="40" height="40" title="Cost to live between adventures.">
                     <input type="number" class="die-value" name="attr_upkeep" value="3+@{socialstanding}-@{renown}+@{upkeepadjust}" disabled>
-                    <span class="attributelabel" title="Cost to live between adventures.">Upkeep</span><button class="blankroll" type="roll" value="!spendgold @{character_id} ?{how much} Upkeep"><img src="https://i.imgur.com/2aj8eEM.png" title="spend gold" width="20" height="20"></button><BR>
+                    <span class="attributelabel" title="Cost to live between adventures.">Upkeep</span><button class="blankroll" type="roll" value="!spendgold @{character_id} ?{how much|1} Upkeep"><img src="https://i.imgur.com/2aj8eEM.png" title="spend gold" width="20" height="20"></button><BR>
                 </td>
                 <td>
                     <img src="https://i.imgur.com/6IBUDHV.png" width="40" height="40" title="talent Adjustment.">
@@ -1198,9 +1200,11 @@
             In:<input type="number" class="die-value" name="attr_enchantingedientcost" value="1" title="cost to create">
             Diff:<input type="number" class="die-value" name="attr_alchemicaldifficulty" title="Difficulty to create">
             Qty:<input type="number" class="die-value" name="attr_enchantment_qty" value="0">
+            <input type="hidden" class="die-value" name="attr_loadbonus" value="0">
+            <input type="hidden" class="die-value" name="attr_wea-class" value="0">
             <!--<button type="roll" class="blankroll" value=""><img src="https://i.imgur.com/yQj6HxR.png" width="20" height="20"></button>-->
-            <button type="roll" class="blankroll" title="Damage roll" value="&{template:CDroll}{{name=@{character_name}}}{{damagename=@{pettyenchantmentname}}}{{effects=@{pettyenchantmenteffects}}}{{result=[[@{pettyenchantmentdamage}t[CD]]]}}{{location=[[1t[HITLOC]]]}}"><img src="https://i.imgur.com/yQj6HxR.png" width="20" height="20"></button>
-
+            <!--<button type="roll" class="blankroll" title="Damage roll" value="&{template:CDroll}}{{name=@{character_name}}}{{damagename=@{pettyenchantmentname}}}{{effects=@{pettyenchantmenteffects}}}{{result=[[@{pettyenchantmentdamage}t[CD]]]}}{{location=[[1t[HITLOC]]]}}"><img src="https://i.imgur.com/yQj6HxR.png" width="20" height="20"></button>-->
+            <button type="roll" class="blankroll" title="Damage roll" value="!rollcd=@{character_id}=@{pettyenchantmentname}=@{pettyenchantmentdamage}=@{wea-class}=?{extra dice|0}=@{loadbonus}=@{pettyenchantmenteffects}"><img src="https://i.imgur.com/yQj6HxR.png" width="20" height="20"></button>
         </fieldset>
         <!--    <hr class="minorbreak">
         </fieldset>-->
@@ -1243,7 +1247,9 @@
         </fieldset>
     </div>
 </div>
+<div class="sheet-Notes">
 
+</div>
 <!--************************************************************************-->
 <!-- END PC SHEET!-->
 <!--************************************************************************-->
@@ -1264,6 +1270,9 @@
         <input type="checkbox" name="attr_minion3" value="1">
         <input type="checkbox" name="attr_minion4" value="1">
         <input type="hidden" name="attr_mobsize" class="die-value" value="@{minion1}+@{minion2}+@{minion3}+@{minion4}" readonly disabled>
+        <br><br>
+        <span class="attributelabel">Minion TN</span><input type="number" class="attributelabel" name="attr_minionTN" value="0">
+        <span class="attributelabel">Minon FC</span><input type="number" class="attributelabel" name="attr_minionFC" value="0">
 	</div>
 	<div class="NPCAttribs">
         <br>
@@ -1402,7 +1411,7 @@
              <fieldset class="repeating_talents">
                 <input type="text" class="talentlabel" name="attr_talentname" value="Ability"><br>
                 <input type="text" name="attr_talentdesc" value="desc">C<input type="number" class="die-value" name="attr_talentcost" value="0">
-                <button class="blankroll" type="roll" name="act_ctivate_talent" value="&{template:conantalent}{{name=@{character_name}}}{{talent=@{talentname}}}{{cost=@{talentcost}}}{{desc=@{talentdesc}}}{{button=[Spend Momentum](!spendmomentum @{character_id} @{talentcost} @{talentname})}}">Use</button>
+                <button class="blankroll" type="roll" name="act_activate_talent" value="&{template:conantalent}{{name=@{character_name}}}{{talent=@{talentname}}}{{cost=@{talentcost}}}{{desc=@{talentdesc}}}{{button=[Spend Momentum](!spendmomentum @{character_id} @{talentcost} @{talentname})}}">Use</button>
             </fieldset>
     </div>
 
@@ -1417,6 +1426,9 @@
     <button class="blankroll" type="roll" value="!transferdoom @{character_id} GMPANEL">Get Doom</button>
     <button class="blankroll" type="roll" value="!savedoom @{character_id} GMPANEL">Save Doom</button><br>
 
+    <img src="https://i.imgur.com/sZW28jM.png" width="40" height="40" title="Fortune">
+    <input type="number" class="big-value" name="attr_fortune" value=0>
+    <button class="blankroll" type="roll" value="!buyfortune @{character_id}">Buy Fortune</button>
  </div>
 
     <div class="NPCstresspanel">
@@ -1567,7 +1579,7 @@
             <input type="number" class="big-value" name="attr_totaldice" value="@{d20momentum}+@{d20fortune}+@{d20doom}+@{d20exception}" readonly disabled>
  
 	       <!--	<button type="roll" name="skill_check" value="!skillcheck @{character_id} skill @{mobsize}">4. Roll</button> -->
-       	<button type="roll" name="skill_check" value="!skillrow @{character_id} @{npcbase_dice} @{currentTN} @{currentFC} @{currentskillname} @{difficulty}">4. Roll</button> 
+       	<button type="roll" name="skill_check" value="!skillrow @{character_id} @{npcbase_dice} @{currentTN} @{currentFC} @{currentskillname} @{difficulty} @{minionTN} @{minionFC}">4. Roll</button> 
 	       	
 	       
       
@@ -1577,7 +1589,139 @@
 		</p>
     </div>
 </div>
-
+<div class="sheet-Ref">
+    <!-- ********************************** -->
+    <!-- QUICK MOMENTUM PANEL -->
+    <!-- ********************************** -->
+    <div class="momentumpanel">
+        <span class="conanheader">Momentum</span><BR>
+        <img src="https://i.imgur.com/ixvmhBJ.png" width="40" height="40" title="Momentum">
+        <input type="number" class="big-value" name="attr_momentum" value="0"><button class="blankroll" type="roll" value="!spendmomentum @{character_id} ?{Misc spend|0} Miscellaneous">Spend<img src="https://i.imgur.com/IhU37jG.png" title="spend momentum" width="30"></button><BR>
+        <button class="blankroll" type="roll" value="!transfermomentum @{character_id} GMPANEL">Get Pool</button>
+        <button class="blankroll" type="roll" value="!savemomentum @{character_id} GMPANEL">Save to Pool</button><br><br>
+        <span class="conanheader">Normal Momentum Spends</span><Br>
+            <b>Create Opportunity</b> - 1M - Repeatable - Gain 1d20 on a skill roll. Max 3<BR>
+            <b>Create Obstacle</b> - 2M - Repeatable - Increase opponents difficulty by 1 step.  Max 3 steps<BR>
+            <BR>
+        <span class="conanheader">Combat Momentum Spends</span><Br>
+        <button type="roll" title="Disarm, one or two handed" value="!quickspend @{character_id} disarm ?{How many points? (1 for 1-handed, 2 for 2-handed)|1}">
+            <img src="https://i.imgur.com/t67lFrC.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            /<img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Disarm
+        </button>
+        <button type="roll" title="Disarm, one or two handed" value="!quickspend @{character_id} disarm 1">
+            <img src="https://i.imgur.com/t67lFrC.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Disarm 1h
+        </button>
+        <button type="roll" title="Disarm, one or two handed" value="!quickspend @{character_id} disarm 2">
+            <img src="https://i.imgur.com/t67lFrC.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Disarm 2h
+        </button>
+        <button type="roll" title="2nd Action at +1 Diff" value="!quickspend @{character_id} swift 2">
+            <img src="https://i.imgur.com/po9edQU.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Swift Action
+        </button>
+        <button type="roll" title="+1 Damage" value="!quickspend @{character_id} extradamage ?{How many points|1}">
+            <img src="https://i.imgur.com/z7RbgaQ.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/I8cMgCs.png" width="10" height="10" title="Momentum">
+            <br>Damage
+        </button>
+        <button type="roll"  title="Re-Roll Damage" value="!quickspend @{character_id} rerolldamage ?{How many dice?|1}">
+            <img src="https://i.imgur.com/58exJrl.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Re-roll Dmg
+        </button>
+        <BR>
+        <button type="roll" title="Piercing 2" value="!quickspend @{character_id} piercing ?{How much momentum?|1}">
+            <img src="https://i.imgur.com/inTQtcD.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/I8cMgCs.png" width="10" height="10" title="Momentum">
+            <br>Penetration
+        </button>
+        <button type="roll" title="Courage +1cd for round" value="!quickspend @{character_id} courage ?{How much momentum?|1}">
+            <img src="https://i.imgur.com/J9UeE5U.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/I8cMgCs.png" width="10" height="10" title="Momentum">
+            <br>Courage
+        </button>
+        <button type="roll" title="1/2 damage to 2nd target in reach" value="!quickspend @{character_id} halfdmg ?{How much damage?|1}">
+            <img src="https://i.imgur.com/3fAdEz9.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>1/2 Dmg to 2nd
+        </button>
+        <button type="roll"  title="Recover 1 vigor" value="!quickspend @{character_id} recovervigor ?{Recover how much vigor?|1}">
+            <img src="https://i.imgur.com/L3cDHdn.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/I8cMgCs.png" width="10" height="10" title="Momentum">
+            <br>Recover Vigor
+        </button>
+        <BR>
+        <button type="roll" title="Recover 1 resolve" value="!quickspend @{character_id} recoverresolve ?{Recover how much resolve?|1}">
+            <img src="https://i.imgur.com/rB3OOWS.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/I8cMgCs.png" width="10" height="10" title="Momentum">
+            <br>Recover Resolve
+        </button>
+        <button type="roll" title="Withdraw" value="!quickspend @{character_id} withdraw 1">
+            <img src="https://imgur.com/Da5RMRO.png" width="30" height="30"><BR>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Withdraw
+        </button>
+        <button type="roll" title="Called Shot" value="!quickspend @{character_id} called 2">
+            <img src="https://i.imgur.com/d9QZYil.png" width="30" height="30"><br>
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <img src="https://i.imgur.com/ixvmhBJ.png" width="10" height="10" title="Momentum">
+            <br>Called Shot
+        </button>
+    </div>
+    <div class="actionspanel">
+        <h2>Free Actions</h2>
+        <ul>
+            *Adjust - Move to a point within Close range<BR>
+            Drop Item - Drop a held item<BR>
+            Drop Prone - Drop to the ground<BR>
+            Simple Task - Any task requring D0 test<BR>
+            Speak - Talk without using communication skill<BR>
+        </ul>
+        <h2>Minor Actions</h2>
+        <ul>
+            Clear - Remove an ongoing condition<br>
+            Draw Item - Draw weapon or item<br>
+            *Movement - Move to point in Medium Range<br>
+            Regain Guard - Recover guard. parry test<br>
+            Stand - Get up from Prone<br>
+        </ul>
+        <h2>Standard Actions</h2>
+        <ul>
+            Assist - Give an advantage to ally (+1d20)<br>
+            Attack - Sttack a foe<br>
+            Brace - Steady unweildy weapon for attack<br>
+            Exploit - Explot action to gain advantage<br>
+            Pass - Do nothing<br>
+            Ready - Hold action<br>
+            Recover - Attempt to recover stress<br>
+            Skill Test - Attempt a skill test<br>
+            *Sprint - Move to point in Long Range<br>
+            Treatment - Treat ally within reach to recover stress<br>
+            Withdraw - Withdraw to Close, avoid Retaliate<br>
+        </ul>
+        <h2>Reactions (+1 doom per. 1 for first, 2 for second, etc)</h2>
+        <ul>
+            Defend - Parry, Dodge, etc<br>
+            Protect - Defending ally from attack<br>
+            Retaliate - Attack nearby foe when opportunity is presented<br>
+        </ul>
+    </div>
+</div>
 <div class="sheet-GM">
     <div class="gmpanel">
         <input type="number" name="attr_momentum"><button type="roll" class="blankroll" title="Subtract 1 from Momentum" value="!decreasemomentum GMPANEL 1"><img src="https://imgur.com/DxddPM7.png" width="22"></button><br>
@@ -1596,14 +1740,15 @@
     <div class="playerpanel">
         <span class="conanheader">Players</span><Br>
         <input type="text" class="talentlabel-5" value="Name">
-        <span class="talentlabel-5">Momentum</span> <span class="talentlabel-5">Actions</span>
+        <span class="talentlabel-5">Momentum</span><span class="talentlabel-5">Fortune</span> <span class="talentlabel-5">Actions</span>
         <fieldset class="repeating_players">
             <input type="checkbox" name="attr_playeractive" value="1">
             <button type="roll" class="blankroll" value="!addplayer GMPANEL @{selected|character_id} @{rowID}" title="Select a player token (with associated sheet) and click ADD.">+</button>
             <input type="text" class="talentlabel-5" name="attr_playername" value="Click here to initialize." readonly>
             <input type="hidden" name="attr_playerID" value="place holder">
             <input type="hidden" name="attr_rowID" value="place holder" >
-           <input type="number" class="talentlabel-5" value=0 name="attr_GMPlayermomentum">
+            <input type="number" class="talentlabel-5" value=0 name="attr_GMPlayermomentum">
+            <input type="number" class="talentlabel-5" value=0 name="attr_GMPlayerfortune">
             F<input type="checkbox" name="attr_freeaction" value=1>
             M<input type="checkbox" name="attr_minoraction" value=1>
             S<input type="checkbox" name="attr_standardaction" value=1>
@@ -1651,6 +1796,9 @@
         </div>
         <div class="conan-roll-result">
             {{rolls}}<br>
+            {{#minions}}
+            {{minions}}<br>
+            {{/minions}}
         </div>
         {{#SUCCEED}}
         <div class="sheet-conan-success">
@@ -1668,14 +1816,18 @@
             Dice: {{result}} 
             + Fortune: {{fortune}}<BR>
             {{/fortune}}
+            {{#minions}}
+            + Minions: {{msuccess}}<br>
+            {{/minions}}
             Total: {{tsuccess}}<BR>
             {{#genmom}}
             Momentum: {{genmom}}<BR>
             {{/genmom}}
             Complications: {{complications}}<BR>
-            {{#button}}
-            {{button}}
-            {{/button}}
+            <!--      
+            {{#struggle}}
+            {{struggle}}
+            {{/struggle}}-->
         </div>
     </div>
 </rolltemplate>
@@ -1737,6 +1889,10 @@
             {{#loads}}
             used {{loads}} load(s)
             {{/loads}}
+        </div>
+       
+        <div class="sheet-reroll">
+            {{button}}
         </div>
     </div>
 </rolltemplate>
@@ -1828,7 +1984,7 @@
 
 <script type="text/worker">
 
-const buttonlist = ["PC","NPC","GM","PCdetail"];
+const buttonlist = ["PC","NPC","GM","PCdetail","Ref"];
 const harmupdate=["totaltrauma","totalwounds","currentskillname","currenttype"];
 const physharms =["wound1","wound2","wound3","wound4","wound5","Hwound1","Hwound2","Hwound3","Hwound4","Hwound5"];
 const mentharms =["trauma1","trauma2","trauma3","trauma4","trauma5","Htrauma1","Htrauma2","Htrauma3","Htrauma4","Htrauma5"];
@@ -2554,5 +2710,9 @@ on("clicked:repeating_weapons:load",function () {
         }
     });
 });
+
+
+
+
 
 </script>
